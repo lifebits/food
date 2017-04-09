@@ -21,7 +21,7 @@ export class SearchProvider {
   }
 
   getIngredientList(val: string) {
-    let url: string = this.apiUrl + '/ingredient?key=' + val;
+    let url: string = this.apiUrl + '/ingredient?limit=5&key=' + val;
     return this.http.get(url)
       .map((res: Response) => res.json())
   }

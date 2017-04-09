@@ -1,4 +1,5 @@
 page-home {
+
     ion-header {
         .custom-button {
             display: inline-block;
@@ -18,4 +19,17 @@ page-home {
         }
    }
 
+   .ingredients-list {
+       //background-color: #eee;
+
+       .inc {
+           display: inline-block;
+           white-space: nowrap;
+           margin: 0 2px 4px 0;
+           padding: 6px 12px;
+           color: #697780;
+           background-color: #d8dcdf;
+           border-radius: 2px;
+       }
+   }
 }

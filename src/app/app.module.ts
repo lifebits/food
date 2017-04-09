@@ -10,6 +10,7 @@ import { ListPage } from '../pages/list/list';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { SearchProvider } from '../providers/search.service';
+import { UserFoodProvider } from '../providers/user-food.service';
 
 @NgModule({
   declarations: [
@@ -32,6 +33,7 @@ import { SearchProvider } from '../providers/search.service';
     StatusBar,
     SplashScreen,
     SearchProvider,
+    UserFoodProvider,
     {provide: ErrorHandler, useClass: IonicErrorHandler}
   ]
 })

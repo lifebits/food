@@ -1,7 +1,8 @@
 import { Component } from '@angular/core';
 import { NavController } from 'ionic-angular';
 
-import {SearchProvider} from '../../providers/search.service';
+import { SearchProvider } from '../../providers/search.service';
+import { UserFoodProvider } from '../../providers/user-food.service';
 
 @Component({
   selector: 'page-home',
@@ -10,22 +11,21 @@ import {SearchProvider} from '../../providers/search.service';
 export class HomePage {
 
   public searchType = this.search.searchType;
-  public searchQuery: string = "";
   public searchPlaceholder: string = this.getSearchPlaceholder();
 
-  public foundIngredients;
-  public foundRecipe;
+  public foundIngredients = [];
+  public foundRecipe = [];
 
   constructor(
     private navCtrl: NavController,
-    private search: SearchProvider) {
+    private search: SearchProvider,
+    private userFood: UserFoodProvider) {
   }
 
   toggleSearchMode(searchType): void {
     this.searchType = searchType;
     this.search.searchType = searchType;
     this.searchPlaceholder = this.getSearchPlaceholder();
-    this.searchQuery = "";
     console.log(searchType);
   }
 
@@ -42,8 +42,9 @@ export class HomePage {
     this.search.getSearchItems(val)
       .subscribe(result => {
         (this.searchType === 'ingredients') ? this.foundIngredients = result : this.foundRecipe = result;
-        //console.log(result);
       });
   }
+
+  
 
 }
