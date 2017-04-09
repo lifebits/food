@@ -1,3 +1,44 @@
 page-home {
+    ion-header {
+        .custom-button {
+            display: inline-block;
+            width: 22px;
+            height: 22px;
+            margin-left: 6px;
+
+            svg: {
+                width: inherit;
+                height: inherit;
+                fill: #333333;
+            }
+
+            &.active svg {
+                fill: #387ef5;
+            }
+        }
+
+      /*.button-container {
+         //text-align: right;
+         display: flex;
+         justify-content: flex-end;
+         margin-right: 8px;
+
+         .custom-button {
+            //display: inline-block;
+            margin-top: 4px;
+            margin-left: 6px;
+            
+            svg {
+               width: 22px;
+               height: 22px;
+               fill: #333333;
+            }
+
+            &.active svg {
+                fill: #387ef5;
+            }
+         }
+      }*/
+   }
 
 }
