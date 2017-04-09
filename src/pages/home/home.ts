@@ -1,32 +1,49 @@
 import { Component } from '@angular/core';
 import { NavController } from 'ionic-angular';
 
+import {SearchProvider} from '../../providers/search.service';
+
 @Component({
   selector: 'page-home',
   templateUrl: 'home.html'
 })
 export class HomePage {
 
-  public searchMode: 'ingredients' | 'recipe' = 'ingredients';
-
+  public searchType = this.search.searchType;
+  public searchQuery: string = "";
   public searchPlaceholder: string = this.getSearchPlaceholder();
 
-  constructor(public navCtrl: NavController) {
+  public foundIngredients;
+  public foundRecipe;
 
+  constructor(
+    private navCtrl: NavController,
+    private search: SearchProvider) {
   }
 
-  toggleSearchMode(searchMode): void {
-    this.searchMode = searchMode;
+  toggleSearchMode(searchType): void {
+    this.searchType = searchType;
+    this.search.searchType = searchType;
     this.searchPlaceholder = this.getSearchPlaceholder();
-    console.log(searchMode);
+    this.searchQuery = "";
+    console.log(searchType);
   }
 
   getSearchPlaceholder(): string {
     let placeholderList = {
       ingredients: 'Искать ингредиенты для блюд',
-      recipe: 'Искать блюда'
+      recipes: 'Искать блюда'
     };
-    return placeholderList[this.searchMode];
+    return placeholderList[this.search.searchType];
+  }
+
+  getSearchItems(ev): void {
+    let val:string = ev.target.value;
+    this.search.getSearchItems(val)
+      .subscribe(result => {
+        (this.searchType === 'ingredients') ? this.foundIngredients = result : this.foundRecipe = result;
+        //console.log(result);
+      });
   }
 
 }

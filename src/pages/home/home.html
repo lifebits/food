@@ -6,12 +6,12 @@
     </button>
     <ion-title>Поиск рецептов</ion-title>
     <ion-buttons end>
-      <div (click)="toggleSearchMode('ingredients')" class="custom-button" [ngClass]="{'active': searchMode === 'ingredients'}">
+      <div (click)="toggleSearchMode('ingredients')" class="custom-button" [ngClass]="{'active': searchType === 'ingredients'}">
         <svg viewBox="0 0 24 24">
           <path d="M3,2H6V5H3V2M6,7H9V10H6V7M8,2H11V5H8V2M17,11L12,6H15V2H19V6H22L17,11M7.5,22C6.72,22 6.04,21.55 5.71,20.9V20.9L3.1,13.44L3,13A1,1 0 0,1 4,12H20A1,1 0 0,1 21,13L20.96,13.29L18.29,20.9C17.96,21.55 17.28,22 16.5,22H7.5M7.61,20H16.39L18.57,14H5.42L7.61,20Z" />
         </svg>
       </div>
-      <div (click)="toggleSearchMode('recipe')" class="custom-button" [ngClass]="{'active': searchMode === 'recipe'}">
+      <div (click)="toggleSearchMode('recipes')" class="custom-button" [ngClass]="{'active': searchType === 'recipes'}">
         <svg viewBox="0 0 24 24">
           <path d="M8.1,13.34L3.91,9.16C2.35,7.59 2.35,5.06 3.91,3.5L10.93,10.5L8.1,13.34M13.41,13L20.29,19.88L18.88,21.29L12,14.41L5.12,21.29L3.71,19.88L13.36,10.22L13.16,10C12.38,9.23 12.38,7.97 13.16,7.19L17.5,2.82L18.43,3.74L15.19,7L16.15,7.94L19.39,4.69L20.31,5.61L17.06,8.85L18,9.81L21.26,6.56L22.18,7.5L17.81,11.84C17.03,12.62 15.77,12.62 15,11.84L14.78,11.64L13.41,13Z" />
         </svg>
@@ -20,26 +20,30 @@
   </ion-navbar>
 
   <ion-toolbar>
-    <ion-searchbar (ionInput)="getItems($event)" placeholder="{{searchPlaceholder}}"></ion-searchbar>
+    <ion-searchbar (ionInput)="getSearchItems($event)" placeholder="{{searchPlaceholder}}"></ion-searchbar>
   </ion-toolbar>
 
 </ion-header>
 
 <ion-content padding>
 
-  <ion-list>
-    <ion-item *ngFor="let item of items">
-      {{ item }}
+  <ion-list *ngIf="searchType === 'ingredients'">
+    <ion-item *ngFor="let item of foundIngredients">
+      {{ item.ingredient_group }}
     </ion-item>
   </ion-list>
 
-  <h3>Ionic Menu Starter</h3>
+  <ion-list *ngIf="searchType === 'recipes'">
+    <ion-item *ngFor="let item of foundRecipe">
+      {{ item.recipe_name }}
+    </ion-item>
+  </ion-list>
 
+  <!--<h3>Ionic Menu Starter</h3>
   <p>
     If you get lost, the <a href="http://ionicframework.com/docs/v2">docs</a> will show you the way.
   </p>
-
-  <button ion-button secondary menuToggle>Toggle Menu</button>
+  <button ion-button secondary menuToggle>Toggle Menu</button>-->
 
 
 </ion-content>
