@@ -28,20 +28,14 @@
 <ion-content padding>
 
   <ion-list *ngIf="searchType === 'ingredients' && foundIngredients.length > 0">
-    <ion-item *ngFor="let item of foundIngredients">
+    <ion-item *ngFor="let item of foundIngredients" (click)="addIngredient(item)">
       {{ item.ingredient_group }}
     </ion-item>
   </ion-list>
 
   <section class="ingredients-list">
-    <span class="inc">
-      вишня - <b>10</b>
-    </span>
-    <span class="inc">
-      растительное масло - <b>200</b>
-    </span>
-    <span class="inc">
-      мука
+    <span class="inc" *ngFor="let item of activeIngredients">
+      {{item.ingredient_group}} - <b>1</b>
     </span>
   </section>
 

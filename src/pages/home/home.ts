@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { NavController } from 'ionic-angular';
 
 import { SearchProvider } from '../../providers/search.service';
@@ -8,18 +8,28 @@ import { UserFoodProvider } from '../../providers/user-food.service';
   selector: 'page-home',
   templateUrl: 'home.html'
 })
-export class HomePage {
+export class HomePage implements OnInit {
 
   public searchType = this.search.searchType;
   public searchPlaceholder: string = this.getSearchPlaceholder();
 
   public foundIngredients = [];
   public foundRecipe = [];
+  public activeIngredients;
 
   constructor(
     private navCtrl: NavController,
     private search: SearchProvider,
     private userFood: UserFoodProvider) {
+  }
+
+  ngOnInit() {
+    this.userFood.activeIngredients$.subscribe(
+      result => {
+        console.log('activeIngredients: ', result);
+        this.activeIngredients = result;
+      }
+    )
   }
 
   toggleSearchMode(searchType): void {
@@ -45,6 +55,8 @@ export class HomePage {
       });
   }
 
-  
+  addIngredient(item) {
+    this.userFood.addActiveIngredients(item);
+  }
 
 }
