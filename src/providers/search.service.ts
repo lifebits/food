@@ -4,7 +4,7 @@ import { Http, Response } from '@angular/http';
 import { Observable } from 'rxjs';
 import 'rxjs/add/operator/map';
 
-import { Ingredient } from '../interfaces/food.interface';
+import { Ingredient, Recipe } from '../interfaces/food.interface';
 
 @Injectable()
 export class SearchProvider {
@@ -17,7 +17,7 @@ export class SearchProvider {
     console.log('Hello SearchProvider');
   }
 
-  getSearchItems(val: string) {
+  getSearchItems(val: string):  Observable<Ingredient[] | Recipe[]> {
     return (this.searchType === 'ingredients') ? this.getIngredientList(val) : this.getRecipeListByName(val);
   }
 
@@ -27,7 +27,7 @@ export class SearchProvider {
       .map((res: Response) => res.json())
   }
 
-  private getRecipeListByName(val: string) {
+  private getRecipeListByName(val: string): Observable<Recipe[]> {
     let url: string = this.apiUrl + '/listrecipe?search=' + val;
     return this.http.get(url)
       .map((res: Response) => res.json())

@@ -4,6 +4,8 @@ import { NavController } from 'ionic-angular';
 import { SearchProvider } from '../../providers/search.service';
 import { UserFoodProvider } from '../../providers/user-food.service';
 
+//import { Ingredient, Recipe } from '../../interfaces/food.interface';
+
 @Component({
   selector: 'page-home',
   templateUrl: 'home.html'
@@ -47,10 +49,12 @@ export class HomePage implements OnInit {
     return placeholderList[this.search.searchType];
   }
 
-  getSearchItems(ev): void {
+  getSearchItems(ev): void {//5454
     let val:string = ev.target.value;
+    if (!val) { return; }
     this.search.getSearchItems(val)
       .subscribe(result => {
+        console.log();
         (this.searchType === 'ingredients') ? this.foundIngredients = result : this.foundRecipe = result;
       });
   }
