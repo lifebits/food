@@ -21,7 +21,7 @@ export class UserFoodProvider {
   }
 
   addActiveIngredients(newItem) {
-    let duplicateFound = this.activeIngredients.find(p => p.id == newItem.id);
+    let duplicateFound = this.activeIngredients.find(p => p.id === newItem.id);
     if (!duplicateFound) {
       this.activeIngredients.push(newItem);
       this.activeIngredientsSource.next(this.activeIngredients);
