@@ -35,21 +35,14 @@
 
   <section class="ingredients-list">
     <span class="inc" *ngFor="let item of activeIngredients">
-      {{item.ingredient_group}} - <b>1</b>
+      {{item.ingredient_group}}
     </span>
   </section>
 
-  <ion-list *ngIf="searchType === 'recipes'">
-    <ion-item *ngFor="let item of foundRecipe">
-      {{ item.recipe_name }}
-    </ion-item>
+  <ion-list>
+    <button ion-item *ngFor="let recipe of foundRecipes" (click)="openRecipeDetailPage()">
+      {{recipe.recipe_name}}
+    </button>
   </ion-list>
-
-  <!--<h3>Ionic Menu Starter</h3>
-  <p>
-    If you get lost, the <a href="http://ionicframework.com/docs/v2">docs</a> will show you the way.
-  </p>
-  <button ion-button secondary menuToggle>Toggle Menu</button>-->
-
 
 </ion-content>

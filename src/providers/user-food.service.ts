@@ -13,11 +13,11 @@ export class UserFoodProvider {
   public activeIngredients$ = this.activeIngredientsSource.asObservable();
   public activeIngredients: Ingredient[] = [];
 
-  private fridgeSource = new Subject(); // какие продукты имеются дома
+  private fridgeSource = new Subject(); // какие продукты имеются дома, на будущее
   public fridge$ = this.fridgeSource.asObservable();
 
   constructor(public http: Http) {
-    console.log('Hello UserIngredientsProvider');
+    //console.log('Hello UserIngredientsProvider');
   }
 
   addActiveIngredients(newItem) {

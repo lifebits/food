@@ -22,19 +22,29 @@ export class SearchProvider {
   }
 
   private getIngredientList(val: string): Observable<Ingredient[]> {
-    let url: string = this.apiUrl + '/ingredient?limit=5&key=' + val;
+    const url: string = this.apiUrl + '/ingredient?limit=5&key=' + val;
     return this.http.get(url)
       .map((res: Response) => res.json())
   }
 
   private getRecipeListByName(val: string): Observable<Recipe[]> {
-    let url: string = this.apiUrl + '/listrecipe?search=' + val;
+    const url: string = this.apiUrl + '/listrecipe?search=' + val;
     return this.http.get(url)
       .map((res: Response) => res.json())
   }
 
-  getRecipeByIngredient() {
-    //получение рецептов по списку ингредиентов
+  //food/searsh?ingredient={"яйцо":"2", "молоко": "100"}",
+  getRecipeByIngredient(ingredients: Ingredient[]) {
+    const query = {};
+
+    ingredients.forEach(item => {
+      query[item.ingredient_group] = 1;
+    })
+
+    const url: string = this.apiUrl + '/searsh?ingredient=' + JSON.stringify(query);
+    
+    return this.http.get(url)
+      .map((res: Response) => res.json())
   }
 
 }

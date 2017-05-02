@@ -4,7 +4,7 @@ import { NavController } from 'ionic-angular';
 import { SearchProvider } from '../../providers/search.service';
 import { UserFoodProvider } from '../../providers/user-food.service';
 
-//import { Ingredient, Recipe } from '../../interfaces/food.interface';
+import { Ingredient, Recipe } from '../../interfaces/food.interface';
 
 @Component({
   selector: 'page-home',
@@ -16,7 +16,7 @@ export class HomePage implements OnInit {
   public searchPlaceholder: string = this.getSearchPlaceholder();
 
   public foundIngredients = [];
-  public foundRecipe = [];
+  public foundRecipes = [];
   public activeIngredients;
 
   constructor(
@@ -26,12 +26,21 @@ export class HomePage implements OnInit {
   }
 
   ngOnInit() {
-    this.userFood.activeIngredients$.subscribe(
-      result => {
-        console.log('activeIngredients: ', result);
-        this.activeIngredients = result;
-      }
-    )
+    this.userFood.activeIngredients$
+      .do(val => console.log('DO', val))
+      .switchMap(
+        (ingredients: Ingredient[]) => {
+          console.log('activeIngredients: ', ingredients);
+          this.activeIngredients = ingredients;
+          return this.search.getRecipeByIngredient(ingredients);
+        }
+      )
+      .subscribe(
+        (recipes: Recipe[]) => {
+          console.log(recipes);
+          this.foundRecipes = recipes;
+        }
+      )
   }
 
   toggleSearchMode(searchType): void {
@@ -42,25 +51,29 @@ export class HomePage implements OnInit {
   }
 
   getSearchPlaceholder(): string {
-    let placeholderList = {
+    const placeholderList = {
       ingredients: 'Искать ингредиенты для блюд',
       recipes: 'Искать блюда'
     };
     return placeholderList[this.search.searchType];
   }
 
-  getSearchItems(ev): void {//5454
-    let val:string = ev.target.value;
-    if (!val) { return; }
+  //todo надо переписывать
+  getSearchItems(ev): void {
+    const val:string = ev.target.value;
+    if (!val) return;
     this.search.getSearchItems(val)
       .subscribe(result => {
-        console.log();
-        (this.searchType === 'ingredients') ? this.foundIngredients = result : this.foundRecipe = result;
+        (this.searchType === 'ingredients') ? this.foundIngredients = result : this.foundRecipes = result;
       });
   }
 
   addIngredient(item) {
     this.userFood.addActiveIngredients(item);
+  }
+
+  openRecipeDetailPage() {
+    console.log('test');
   }
 
 }
